@@ -2,17 +2,12 @@ package com.tomcat.Cards.service.impl;
 
 import com.tomcat.Cards.constants.CardsConstants;
 import com.tomcat.Cards.exception.CreditCardAlreadyExists;
-import com.tomcat.Cards.exception.ResourceNotFoundException;
 import com.tomcat.Cards.model.Cards;
 import com.tomcat.Cards.repository.CardsRepository;
 import com.tomcat.Cards.service.iCardsServices;
-import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-
-import javax.smartcardio.CardNotPresentException;
 import java.time.LocalDateTime;
-import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -40,7 +35,7 @@ public class iCardsServicesImpl implements iCardsServices {
         Cards card = new Cards();
 
         long newCreditCardNumber = 1000000000L + new Random().nextLong(900000000);
-        long card_CVV_code = 100L+new Random().nextLong(9000);
+        long card_CVV_code = 100L+new Random().nextLong(900);
 
         card.setMobileNumber(mobileNumber);
         card.setTotalLimit(CardsConstants.CARD_LIMIT);
