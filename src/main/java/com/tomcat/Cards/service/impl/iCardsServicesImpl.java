@@ -45,7 +45,7 @@ public class iCardsServicesImpl implements iCardsServices {
         card.setCardIssuerBank(CardsConstants.CARD_ISSUER_BANK1);
         card.setCardExpiryDate(LocalDateTime.now().plusYears(4));
         card.setAvailableLimit(CardsConstants.CARD_LIMIT);
-        card.setCardType(CardsConstants.CREDIT_CARD);
+        card.setCardType(CardsConstants.DEBIT_CARD);
         card.setCardStatus(CardsConstants.CARD_STATUS_ACTIVE);
         return card;
     }
