@@ -23,10 +23,7 @@ public class iCardsServicesImpl implements iCardsServices {
      */
     @Override
     public boolean createNewCard(String mobileNumber) {
-        Cards cards = cardsRepository.findByMobileNumber(mobileNumber).orElseThrow(
-                ()->new CreditCardAlreadyExists(mobileNumber)
-        );
-        System.out.println(cards);
+        System.out.println(mobileNumber);
         return true;
     }
 
