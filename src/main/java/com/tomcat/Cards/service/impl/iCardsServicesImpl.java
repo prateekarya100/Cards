@@ -40,7 +40,7 @@ public class iCardsServicesImpl implements iCardsServices {
         card.setMobileNumber(mobileNumber);
         card.setTotalLimit(CardsConstants.CARD_LIMIT);
         card.setCardCVV(card_CVV_code);
-        card.setCardNumber(String.valueOf(card_CVV_code));
+        card.setCardNumber(String.valueOf(newCreditCardNumber));
         card.setCardName(CardsConstants.CARD_NAME2);
         card.setCardIssuerBank(CardsConstants.CARD_ISSUER_BANK1);
         card.setCardExpiryDate(LocalDateTime.now().plusYears(4));
