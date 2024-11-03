@@ -27,7 +27,7 @@ public class CardsController {
         if(isCardIssued){
             return ResponseEntity.status(HttpStatus.CREATED)
                     .body(new ResponseDto(HttpStatus.ACCEPTED,
-                            "woohooo!!, your card has been issued"));
+                            "woohooo!!, your credit card has been issued"));
         }else{
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(
                     HttpStatus.EXPECTATION_FAILED,"card not processed due to technical error"
