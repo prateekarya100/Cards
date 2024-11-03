@@ -3,9 +3,9 @@ package com.tomcat.Cards.constants;
 public class CardsConstants {
     private CardsConstants() {}
 
-    public static String CREDIT_CARD = "Credit_Card";
+    public final static String CREDIT_CARD = "Credit_Card";
     public final static String DEBIT_CARD = "Credit_Card";
-    public final static String CARD_LIMIT = "1_80_000";
+    public final static long CARD_LIMIT = 1_80_000;
     public final static String CARD_ISSUER = "Card_MS";
     public final static String CARD_ISSUER_BANK1 = "HDFC INSTAPAY CREDITS";
     public final static String CARD_ISSUER_BANK2 = "SBI CREDIT CARDS";

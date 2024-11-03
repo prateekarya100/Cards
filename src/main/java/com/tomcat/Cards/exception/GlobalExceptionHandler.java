@@ -54,10 +54,10 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<ErrorResponseDto> handleCreditCardAlreadyExists(CreditCardAlreadyExists card, WebRequest request) {
         return new ResponseEntity<>(
                 new ErrorResponseDto(request.getDescription(false),
-                        HttpStatus.ALREADY_REPORTED,
+                        HttpStatus.CONFLICT,
                         card.getMessage(),
                         LocalDateTime.now()),
-                HttpStatus.ALREADY_REPORTED);
+                HttpStatus.CONFLICT);
     }
 
     @ExceptionHandler(ResourceNotFoundException.class)

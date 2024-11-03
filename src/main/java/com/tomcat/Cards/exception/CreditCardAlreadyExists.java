@@ -5,7 +5,8 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 
 @ResponseStatus(HttpStatus.ALREADY_REPORTED)
 public class CreditCardAlreadyExists extends RuntimeException {
-    public CreditCardAlreadyExists(String mobileNumber) {
-        super("credit card already exists with mobile number : " + mobileNumber);
+
+    public CreditCardAlreadyExists(String card, String mobile, String mobileNumber) {
+        super(String.format(" %s is already issued to customer with %s number %s", card, mobile,mobileNumber));
     }
 }

@@ -1,6 +1,8 @@
 package com.tomcat.Cards.service.impl;
 
+import com.tomcat.Cards.constants.CardsConstants;
 import com.tomcat.Cards.exception.CreditCardAlreadyExists;
+import com.tomcat.Cards.exception.ResourceNotFoundException;
 import com.tomcat.Cards.model.Cards;
 import com.tomcat.Cards.repository.CardsRepository;
 import com.tomcat.Cards.service.iCardsServices;
@@ -8,6 +10,8 @@ import io.swagger.v3.oas.annotations.Operation;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import javax.smartcardio.CardNotPresentException;
+import java.time.LocalDateTime;
 import java.util.Optional;
 import java.util.Random;
 
@@ -23,18 +27,31 @@ public class iCardsServicesImpl implements iCardsServices {
      */
     @Override
     public boolean createNewCard(String mobileNumber) {
-        System.out.println(mobileNumber);
-        return true;
+            Cards card = cardsRepository.findByMobileNumber(mobileNumber);
+            if (card != null) {
+                throw new CreditCardAlreadyExists("card","mobile",mobileNumber);
+            }else {
+                cardsRepository.save(newCardIssued(mobileNumber));
+                return true;
+            }
     }
 
-//    private Cards createNewCreditCardToCustomer(String mobileNumber) {
-//        Cards cards = new Cards();
-//        long cardNumber = 10000000000L+new Random(900000000).nextLong();
-//        long cardCVVNumber = 100L+new Random(900000000).nextLong();
-//        System.out.println("cardNumber :: "+cardNumber);
-//        System.out.println("cardNumber :: "+cardNumber);
-//        cards.setCardNumber(String.valueOf(cardNumber));
-//        cards.setCardCVV(cardCVVNumber);
-//        return cards;
-//    }
+    private Cards newCardIssued(String mobileNumber) {
+        Cards card = new Cards();
+
+        long newCreditCardNumber = 1000000000L + new Random().nextLong(900000000);
+        long card_CVV_code = 100L+new Random().nextLong(9000);
+
+        card.setMobileNumber(mobileNumber);
+        card.setTotalLimit(CardsConstants.CARD_LIMIT);
+        card.setCardCVV(card_CVV_code);
+        card.setCardNumber(String.valueOf(card_CVV_code));
+        card.setCardName(CardsConstants.CARD_NAME2);
+        card.setCardIssuerBank(CardsConstants.CARD_ISSUER_BANK2);
+        card.setCardExpiryDate(LocalDateTime.now().plusYears(4));
+        card.setAvailableLimit(CardsConstants.CARD_LIMIT);
+        card.setCardType(CardsConstants.CREDIT_CARD);
+        card.setCardStatus(CardsConstants.CARD_STATUS_ACTIVE);
+        return card;
+    }
 }
