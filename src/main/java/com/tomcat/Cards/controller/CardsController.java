@@ -23,7 +23,7 @@ public class CardsController {
        if(isCardCreated){
            return ResponseEntity.status(HttpStatus.OK)
                    .body(new ResponseDto(HttpStatus.OK,
-                           "new credit card issued successfully"));
+                           "newly credit card issued successfully"));
        }else{
            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED)
                    .body(new ResponseDto(HttpStatus.OK,
