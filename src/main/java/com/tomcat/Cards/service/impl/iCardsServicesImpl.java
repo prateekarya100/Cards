@@ -8,6 +8,7 @@ import com.tomcat.Cards.service.iCardsServices;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
 import java.time.LocalDateTime;
+import java.util.Optional;
 import java.util.Random;
 
 @Service
@@ -22,8 +23,8 @@ public class iCardsServicesImpl implements iCardsServices {
      */
     @Override
     public boolean createNewCard(String mobileNumber) {
-            Cards card = cardsRepository.findByMobileNumber(mobileNumber);
-            if (card != null) {
+            Optional<Cards> cards = Optional.of(cardsRepository.findByMobileNumber(mobileNumber));
+            if (cards.isPresent()) {
                 throw new CreditCardAlreadyExists("card","mobile",mobileNumber);
             }else {
                 cardsRepository.save(newCardIssued(mobileNumber));
