@@ -80,7 +80,7 @@ public class iCardsServicesImpl implements iCardsServices {
         Optional<Cards> cards = Optional.ofNullable(Optional.ofNullable(cardsRepository.findByMobileNumber(mobileNumber)).orElseThrow(
                 () -> new ResourceNotFoundException("card", "mobile number", mobileNumber)
         ));
-        cardsRepository.deleteByCustomerMobileNumber(cards.get().getMobileNumber());
+        cardsRepository.deleteByMobileNumber(cards.get().getMobileNumber());
         return true;
     }
 
