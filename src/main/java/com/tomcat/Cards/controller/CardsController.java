@@ -1,9 +1,16 @@
 package com.tomcat.Cards.controller;
 
 import com.tomcat.Cards.dto.CardsDto;
+import com.tomcat.Cards.dto.ErrorResponseDto;
 import com.tomcat.Cards.dto.ResponseDto;
 import com.tomcat.Cards.model.Cards;
 import com.tomcat.Cards.service.iCardsServices;
+import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
+import io.swagger.v3.oas.annotations.responses.ApiResponse;
+import io.swagger.v3.oas.annotations.responses.ApiResponses;
+import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -16,10 +23,36 @@ import java.util.List;
 @RestController
 @RequestMapping(path = "/api/cards",produces = MediaType.APPLICATION_JSON_VALUE)
 @AllArgsConstructor
+@Tag(
+        name = "Cards Microservices",
+        description = "EazyBank cards microservices restful API documentation"
+)
 public class CardsController {
 
     private iCardsServices cardsServices;
 
+    @Operation(
+            description = "EazyBank issue new card to the customer"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "201",
+                            description = "CREATED"
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "INTERNAL_SERVER_ERROR"
+                    ),
+                    @ApiResponse(
+                            responseCode = "417",
+                            description = "EXPECTATION_FAILED",
+                            content = @Content(
+                                    contentSchema = @Schema(implementation = ErrorResponseDto.class)
+                            )
+                    )
+            }
+    )
     @PostMapping(value = "/issueCard")
     public ResponseEntity<ResponseDto> issueNewCard(@RequestParam
                                                         String mobileNumber) throws CardNotPresentException {
@@ -35,6 +68,28 @@ public class CardsController {
         }
     }
 
+    @Operation(
+            description = "EazyBank fetched card detail of the customer"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "201",
+                            description = "CREATED"
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "INTERNAL_SERVER_ERROR"
+                    ),
+                    @ApiResponse(
+                            responseCode = "417",
+                            description = "EXPECTATION_FAILED",
+                            content = @Content(
+                                    contentSchema = @Schema(implementation = ErrorResponseDto.class)
+                            )
+                    )
+            }
+    )
     @GetMapping(value = "/fetchCard")
     public ResponseEntity<CardsDto> fetchCard(@RequestParam String cardNumber){
         CardsDto cardsDto = cardsServices.fetchCardDetailsByCardNumber(cardNumber);
@@ -47,11 +102,35 @@ public class CardsController {
         }
     }
 
+
+
     /**
      * @Param- mobileNumber used to fetch card on which we want to update details
      *         like upgrade credit limit,extend expiration date, change card type,
      *         made card status active or freeze
      */
+    @Operation(
+            description = "EazyBank update existing card details of the customer"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "201",
+                            description = "CREATED"
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "INTERNAL_SERVER_ERROR"
+                    ),
+                    @ApiResponse(
+                            responseCode = "417",
+                            description = "EXPECTATION_FAILED",
+                            content = @Content(
+                                    contentSchema = @Schema(implementation = ErrorResponseDto.class)
+                            )
+                    )
+            }
+    )
     @PutMapping(value = "/updateCard")
     public ResponseEntity<ResponseDto> updateCard(@RequestBody CardsDto cardsDto){
         boolean isCardUpdated=cardsServices.cardDetailsUpdation(cardsDto);
@@ -65,6 +144,28 @@ public class CardsController {
         }
     }
 
+    @Operation(
+            description = "EazyBank process card closure the customer"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "OK"
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "INTERNAL_SERVER_ERROR"
+                    ),
+                    @ApiResponse(
+                            responseCode = "417",
+                            description = "EXPECTATION_FAILED",
+                            content = @Content(
+                                    contentSchema = @Schema(implementation = ErrorResponseDto.class)
+                            )
+                    )
+            }
+    )
     @DeleteMapping(value = "/cardClosure")
     public ResponseEntity<ResponseDto> cardClosureRequestProcess(@RequestParam String mobileNumber){
         boolean isClosed=cardsServices.cardClosureHandler(mobileNumber);
@@ -80,6 +181,28 @@ public class CardsController {
         }
     }
 
+    @Operation(
+            description = "EazyBank issue new card to the customer"
+    )
+    @ApiResponses(
+            value = {
+                    @ApiResponse(
+                            responseCode = "200",
+                            description = "OK"
+                    ),
+                    @ApiResponse(
+                            responseCode = "500",
+                            description = "INTERNAL_SERVER_ERROR"
+                    ),
+                    @ApiResponse(
+                            responseCode = "417",
+                            description = "EXPECTATION_FAILED",
+                            content = @Content(
+                                    contentSchema = @Schema(implementation = ErrorResponseDto.class)
+                            )
+                    )
+            }
+    )
     @GetMapping(value = "/allCards")
     public List<Cards> fetchAllCards() {
         return cardsServices.fetchingAllCustomersCards();
