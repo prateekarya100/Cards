@@ -36,7 +36,7 @@ public class CardsController {
     private iCardsServices cardsServices;
 
     @Operation(
-            description = "EazyBank issue new card to the customer"
+            summary = "EazyBank issue new card to the customer"
     )
     @ApiResponses(
             value = {
@@ -75,7 +75,7 @@ public class CardsController {
     }
 
     @Operation(
-            description = "EazyBank fetched card detail of the customer"
+            summary = "EazyBank fetched card detail of the customer"
     )
     @ApiResponses(
             value = {
@@ -118,7 +118,7 @@ public class CardsController {
      *         made card status active or freeze
      */
     @Operation(
-            description = "EazyBank update existing card details of the customer"
+            summary = "EazyBank update existing card details of the customer"
     )
     @ApiResponses(
             value = {
@@ -153,7 +153,7 @@ public class CardsController {
     }
 
     @Operation(
-            description = "EazyBank process card closure the customer"
+            summary = "EazyBank process card closure the customer"
     )
     @ApiResponses(
             value = {
@@ -192,7 +192,7 @@ public class CardsController {
     }
 
     @Operation(
-            description = "EazyBank issue new card to the customer"
+            summary = "EazyBank issue new card to the customer"
     )
     @ApiResponses(
             value = {
