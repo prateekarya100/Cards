@@ -58,9 +58,9 @@ public class CardsController {
             }
     )
     @PostMapping(value = "/issueCard")
-    public ResponseEntity<ResponseDto> issueNewCard(@Valid
+    public ResponseEntity<ResponseDto> issueNewCard(
                                                         @RequestParam
-                                                        @Pattern(regexp = "$![0-9]{10}",message = "mobile number must be of 10 digit only")
+                                                        @Pattern(regexp = "$|[0-9]{10}",message = "mobile number must be of 10 digit only")
                                                         String mobileNumber) throws CardNotPresentException {
         boolean isCardIssued = cardsServices.createNewCard(mobileNumber);
         if(isCardIssued){
@@ -97,8 +97,8 @@ public class CardsController {
             }
     )
     @GetMapping(value = "/fetchCard")
-    public ResponseEntity<CardsDto> fetchCard(@Valid
-                                                  @Pattern(regexp = "$![0-9]{10}",message = "card number must be of 10 digit only")
+    public ResponseEntity<CardsDto> fetchCard(
+                                                  @Pattern(regexp = "$|[0-9]{10}",message = "card number must be of 10 digit only")
                                                   @RequestParam String cardNumber){
         CardsDto cardsDto = cardsServices.fetchCardDetailsByCardNumber(cardNumber);
         if(cardsDto != null){
@@ -175,8 +175,8 @@ public class CardsController {
             }
     )
     @DeleteMapping(value = "/cardClosure")
-    public ResponseEntity<ResponseDto> cardClosureRequestProcess(@Valid @RequestParam
-                                                                     @Pattern(regexp = "$![0-9]{10}",message = "mobile number must be of 10 digit only")
+    public ResponseEntity<ResponseDto> cardClosureRequestProcess( @RequestParam
+                                                                     @Pattern(regexp = "$|[0-9]{10}",message = "mobile number must be of 10 digit only")
                                                                      String mobileNumber){
         boolean isClosed=cardsServices.cardClosureHandler(mobileNumber);
         if (isClosed){

@@ -22,14 +22,14 @@ public class CardsDto {
             description = "mobile number of the customer",example = "9123456789"
     )
     @NotEmpty(message = "mobile number must not be null or empty")
-    @Pattern(regexp = "$![0-9]{10}",message = "mobile number must be of 10 digit only")
+    @Pattern(regexp = "$|[0-9]{10}",message = "mobile number must be of 10 digit only")
     private String mobileNumber;
 
     @Schema(
             description = "customers bank card number",example = "1122334455"
     )
     @NotEmpty(message = "card number must not be null or empty")
-    @Pattern(regexp = "$![0-9]{10}",message = "card number must be of 10 digit only")
+    @Pattern(regexp = "$|[0-9]{10}",message = "card number must be of 10 digit only")
     @Positive(message = "card number should be positive sequence of numbers")
     private String cardNumber;
 
@@ -50,6 +50,7 @@ public class CardsDto {
             description = "card 3 digit cvv number",example = "123"
     )
     @NotEmpty(message = "card cvv number must not be null or empty")
+    @Size(min = 3,max = 3,message = "card cvv number must be of 3 digit only")
     private long cardCVV;
 
     @Schema(
