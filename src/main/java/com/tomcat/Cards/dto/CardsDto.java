@@ -2,10 +2,7 @@ package com.tomcat.Cards.dto;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import io.swagger.v3.oas.annotations.media.Schema;
-import jakarta.validation.constraints.NotEmpty;
-import jakarta.validation.constraints.Pattern;
-import jakarta.validation.constraints.Positive;
-import jakarta.validation.constraints.Size;
+import jakarta.validation.constraints.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -43,14 +40,16 @@ public class CardsDto {
     @Schema(
             description = "2024-11-04T14:15:19.405+05:30",example = "9123456789"
     )
-    @NotEmpty(message = "card expiry date must not be null or empty")
+//    @NotEmpty(message = "card expiry date must not be null or empty")
     private LocalDateTime cardExpiryDate;
 
     @Schema(
             description = "card 3 digit cvv number",example = "123"
     )
-    @NotEmpty(message = "card cvv number must not be null or empty")
-    @Size(min = 3,max = 3,message = "card cvv number must be of 3 digit only")
+//    @NotEmpty(message = "card cvv number must not be null or empty")
+//    @Size(min = 3,max = 3,message = "card cvv number must be of 3 digit only")
+    @Min(value = 100, message = "card cvv number should be of 3 digit")
+    @Max(value = 999, message = "card cvv number should be of 3 digit")
     private long cardCVV;
 
     @Schema(
