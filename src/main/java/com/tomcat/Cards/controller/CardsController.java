@@ -29,7 +29,7 @@ public class CardsController {
                     .body(new ResponseDto(HttpStatus.ACCEPTED,
                             "woohooo!!, your credit card has been issued"));
         }else{
-            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ResponseDto(
+            return ResponseEntity.status(HttpStatus.EXPECTATION_FAILED).body(new ResponseDto(
                     HttpStatus.EXPECTATION_FAILED,"card not processed due to technical error"
             ));
         }
