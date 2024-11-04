@@ -11,10 +11,13 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Pattern;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.smartcardio.CardNotPresentException;
@@ -27,6 +30,7 @@ import java.util.List;
         name = "Cards Microservices",
         description = "EazyBank cards microservices restful API documentation"
 )
+@Validated
 public class CardsController {
 
     private iCardsServices cardsServices;
@@ -54,7 +58,9 @@ public class CardsController {
             }
     )
     @PostMapping(value = "/issueCard")
-    public ResponseEntity<ResponseDto> issueNewCard(@RequestParam
+    public ResponseEntity<ResponseDto> issueNewCard(@Valid
+                                                        @RequestParam
+                                                        @Pattern(regexp = "$![0-9]{10}",message = "mobile number must be of 10 digit only")
                                                         String mobileNumber) throws CardNotPresentException {
         boolean isCardIssued = cardsServices.createNewCard(mobileNumber);
         if(isCardIssued){
@@ -91,7 +97,9 @@ public class CardsController {
             }
     )
     @GetMapping(value = "/fetchCard")
-    public ResponseEntity<CardsDto> fetchCard(@RequestParam String cardNumber){
+    public ResponseEntity<CardsDto> fetchCard(@Valid
+                                                  @Pattern(regexp = "$![0-9]{10}",message = "card number must be of 10 digit only")
+                                                  @RequestParam String cardNumber){
         CardsDto cardsDto = cardsServices.fetchCardDetailsByCardNumber(cardNumber);
         if(cardsDto != null){
             return ResponseEntity
@@ -132,7 +140,7 @@ public class CardsController {
             }
     )
     @PutMapping(value = "/updateCard")
-    public ResponseEntity<ResponseDto> updateCard(@RequestBody CardsDto cardsDto){
+    public ResponseEntity<ResponseDto> updateCard(@Valid @RequestBody CardsDto cardsDto){
         boolean isCardUpdated=cardsServices.cardDetailsUpdation(cardsDto);
         if(isCardUpdated){
             return ResponseEntity.status(HttpStatus.ACCEPTED)
@@ -167,7 +175,9 @@ public class CardsController {
             }
     )
     @DeleteMapping(value = "/cardClosure")
-    public ResponseEntity<ResponseDto> cardClosureRequestProcess(@RequestParam String mobileNumber){
+    public ResponseEntity<ResponseDto> cardClosureRequestProcess(@Valid @RequestParam
+                                                                     @Pattern(regexp = "$![0-9]{10}",message = "mobile number must be of 10 digit only")
+                                                                     String mobileNumber){
         boolean isClosed=cardsServices.cardClosureHandler(mobileNumber);
         if (isClosed){
             return new ResponseEntity<>(new ResponseDto(
