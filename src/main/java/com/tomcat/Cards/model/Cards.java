@@ -1,5 +1,6 @@
 package com.tomcat.Cards.model;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -10,6 +11,7 @@ import java.time.LocalDateTime;
 
 @Entity
 @Setter @Getter @AllArgsConstructor @NoArgsConstructor @Builder @ToString
+@JsonIgnoreProperties({"createdAt","createdBy","updatedAt","updatedBy"})
 public class Cards extends BaseEntity{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

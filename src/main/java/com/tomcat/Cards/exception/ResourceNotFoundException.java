@@ -8,4 +8,8 @@ public class ResourceNotFoundException extends RuntimeException{
     public ResourceNotFoundException(String message) {
         super(message);
     }
+
+    public ResourceNotFoundException(String card, String cardNumber, String cardNumber1) {
+        super(String.format("none any %s found with %s : %s", card, cardNumber, cardNumber1));
+    }
 }
